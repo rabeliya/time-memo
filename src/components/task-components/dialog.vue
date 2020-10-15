@@ -1,0 +1,98 @@
+<template>
+  <div class="dialog-wrapper">
+    <div class="dialog-bg"></div>
+    <div class="dialog">
+      <!-- <form class="dialog-form" @submit.prevent="$emit('send')"> -->
+      <form class="dialog-form">
+        <!-- <input type="text" :value="title" @input="$emit('update:title',$event.target.value)"> -->
+        <input type="text" @input="$emit('update:title',$event.target.value)">
+        <!-- <select :value="color" @input="$emit('update:color',$event.target.value)"> -->
+        <select @input="$emit('update:color',$event.target.value)">
+            <option value="red">🔴</option>
+            <option value="green">🟢</option>
+            <option value="yellow">🟡</option>
+            <option value="blue">🔵</option>
+            <option value="pink">🟣</option>
+        </select>
+        <div class="button-wrapper">
+          <button type="submit" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>
+          <button class="cancel-button" @click="toggleDialog()">cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  props: {
+    title: String,
+    color: String,
+  },
+  data: ()=> ({
+  }),
+  methods: {
+    toggleDialog: function() {
+      this.isDialog = ! this.isDialog;
+      this.$emit('toggle',this.isDialog )
+    },
+  }
+};
+</script>
+<style lang="scss" scoped>
+.dialog-wrapper {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  .dialog-bg {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.4;
+  }
+  .dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    width: 500px;
+    height: 300px;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    button {
+      width: 90px;
+    }
+    .ok-button {
+      background: cornflowerblue;
+    }
+    .cancel-button {
+      background: darkgray;
+    }
+  }
+
+}
+.dialog-wrapper.show {
+  display: block;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin-bottom: 30px;
+
+  select {
+    width: 50px;
+  }
+}
+</style>

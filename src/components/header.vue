@@ -9,11 +9,11 @@
   h1 {
     font-size: 1rem;
     color: #fff;
+    margin: 0;
+    padding: 20px;
   }
 }
 </style>
 <script>
-export default {
-  data() {},
-};
+export default {};
 </script>

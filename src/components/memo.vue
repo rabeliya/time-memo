@@ -2,8 +2,7 @@
   <div id="memo">
     <h2>memo</h2>
     <textarea
-      v-bind:value="value"
-      v-on:input="$emit('input', $event.target.value)"
+      v-model="memo"
       name="memo"
       cols="30"
       rows="10"
@@ -46,6 +45,9 @@
 </style>
 <script>
 export default {
+  props: {
+    value: String,
+  },
   data() {
     return {
       memo: "",
