@@ -32,10 +32,8 @@ export default {
   data: () => ({
     cards: [],
     isDialog: false,
-    hold:[
-      {
-        title: "", color: ""
-      }]
+    hold:
+      { title: "", color: "" }
   }),
   methods: {
     reflectDialog(newValue) {

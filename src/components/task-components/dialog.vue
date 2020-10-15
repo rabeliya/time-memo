@@ -2,12 +2,12 @@
   <div class="dialog-wrapper">
     <div class="dialog-bg"></div>
     <div class="dialog">
-      <!-- <form class="dialog-form" @submit.prevent="$emit('send')"> -->
-      <form class="dialog-form">
+      <form class="dialog-form" @submit.prevent="$emit('send')">
+      <!-- <form class="dialog-form"> -->
         <!-- <input type="text" :value="title" @input="$emit('update:title',$event.target.value)"> -->
-        <input type="text" @input="$emit('update:title',$event.target.value)">
+        <input type="text" @input="$emit('update:title',$event.target.value)" v-model="hold.title">
         <!-- <select :value="color" @input="$emit('update:color',$event.target.value)"> -->
-        <select @input="$emit('update:color',$event.target.value)">
+        <select @input="$emit('update:color',$event.target.value)" v-model="hold.color">
             <option value="red">🔴</option>
             <option value="green">🟢</option>
             <option value="yellow">🟡</option>
@@ -25,8 +25,12 @@
 <script>
 export default {
   props: {
-    title: String,
-    color: String,
+    // title:String,
+    // color:String,
+    hold: {
+      type: Object,
+      default: () => ({})
+    }
   },
   data: ()=> ({
   }),
