@@ -1,20 +1,30 @@
 <template>
   <div>
-    <OptionDialog v-if="this.isDialog" v-bind:value="isDialog" @toggle="reflectDialog" v-bind.sync="hold" @submit="createCard"/>
-    <ul>
-      <li>
-        <CreateCard @toggle="reflectDialog"/>
-      </li>
-      <li v-for="card in cards" :key="card.id">
-        <div class="task-card">
-          <!-- <p>{{ this.cards.title }}</p>
-          <span class="card-color">{{ this.cards.color }}</span> -->
+    <OptionDialog v-if="this.isDialog" v-bind:value="isDialog" @toggle="reflectDialog" v-bind.sync="hold" @submit="createCard()"/>
+    <ul class="card-list">
+      <li v-for="(card,index) in cards" :key="card.id" class="task-card">
+        <div>
+          <p>{{ cards[index].title }}</p>
+          <span class="card-color">{{ cards[index].color }}</span>
           <span class="edit-card">...</span>
-          <input type="checkbox" name="" id="" />
-          <input type="checkbox" name="" id="" />
-          <input type="checkbox" name="" id="" />
-          <input type="checkbox" name="" id="" />
+          <ul>
+            <li>
+              <input type="checkbox" name="" id="" />
+            </li>
+            <li>
+              <input type="checkbox" name="" id="" />
+            </li>
+            <li>
+              <input type="checkbox" name="" id="" />
+            </li>
+            <li>
+              <input type="checkbox" name="" id="" />
+            </li>
+          </ul>          
         </div>
+      </li>
+      <li>
+        <CreateCard @toggle="reflectDialog" v-bind:value="isDialog"/>
       </li>
     </ul>
   </div>
@@ -48,14 +58,29 @@ export default {
       this.hold.title = "";
       this.hold.color = "";
     }
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
-.task-card {
-  border: cornflowerblue 2px solid;
-  .edit-card {
-    cursor: pointer;
+
+li {
+  list-style: none;
+}
+
+.card-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  .task-card {
+    background: #fff;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    width: 190px;
+    height: 250px;
+    padding: 20px;
+    margin-bottom: 20px;
+    .edit-card {
+      cursor: pointer;
+    }
   }
 }
 </style>

@@ -2,12 +2,9 @@
   <div class="dialog-wrapper">
     <div class="dialog-bg"></div>
     <div class="dialog">
-      <form class="dialog-form" @submit.prevent="$emit('send')">
-      <!-- <form class="dialog-form"> -->
-        <!-- <input type="text" :value="title" @input="$emit('update:title',$event.target.value)"> -->
-        <input type="text" @input="$emit('update:title',$event.target.value)" v-model="hold.title">
-        <!-- <select :value="color" @input="$emit('update:color',$event.target.value)"> -->
-        <select @input="$emit('update:color',$event.target.value)" v-model="hold.color">
+      <form class="dialog-form" @submit.prevent="$emit('send')">              
+        <input type="text" @input="$emit('update:title',$event.target.value)" :value="hold.title">        
+        <select @input="$emit('update:color',$event.target.value)" :value="hold.color">
             <option value="red">🔴</option>
             <option value="green">🟢</option>
             <option value="yellow">🟡</option>
@@ -15,8 +12,8 @@
             <option value="pink">🟣</option>
         </select>
         <div class="button-wrapper">
-          <button type="submit" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>
-          <button class="cancel-button" @click="toggleDialog()">cancel</button>
+          <button type="button" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>          
+          <button class="cancel-button" type="button" @click="toggleDialog()">cancel</button>
         </div>
       </form>
     </div>
@@ -25,8 +22,6 @@
 <script>
 export default {
   props: {
-    // title:String,
-    // color:String,
     hold: {
       type: Object,
       default: () => ({})
@@ -36,7 +31,7 @@ export default {
   }),
   methods: {
     toggleDialog: function() {
-      this.isDialog = ! this.isDialog;
+      this.isDialog = false;
       this.$emit('toggle',this.isDialog )
     },
   }

@@ -3,8 +3,8 @@
 </template>
 <script>
 export default {
-  props: {
-    // dialogValue: Boolean
+  props: {    
+    value:Boolean
   },
   data: ()=> ({
     dialogValue: false,
@@ -12,7 +12,12 @@ export default {
   methods: {
     toggleDialog: function() {
       this.dialogValue = ! this.dialogValue;
-      this.$emit('toggle',this.dialogValue )
+      this.$emit('toggle',this.dialogValue )      
+    }
+  },
+    watch: {
+    value: function(newValue) {
+      this.dialogValue = newValue;
     }
   }
 
