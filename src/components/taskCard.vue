@@ -4,10 +4,11 @@
     <ul class="card-list">
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">
         <div>
-          <p>{{ cards[index].title }}</p>
-          <span class="card-color">{{ cards[index].color }}</span>
           <span class="edit-card">...</span>
-          <ul>
+          <p class="card-header">
+            <span class="card-color" v-bind:style="{background:cards[index].color }"></span>
+            {{ cards[index].title }}</p>          
+          <ul class="check-list">
             <li>
               <input type="checkbox" name="" id="" />
             </li>
@@ -69,17 +70,37 @@ li {
 
 .card-list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
+  padding-inline-start: 0;  
+  padding: 40px;
+  .card-header {
+    display: flex;        
+    .card-color {
+      display: block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+  }
   .task-card {
     background: #fff;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
     width: 190px;
     height: 250px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;    
     .edit-card {
       cursor: pointer;
+    }
+    .check-list {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;      
+      height: 130px;            
+      margin-top: 40px; 
+      padding-inline-start: 0;     
     }
   }
 }
