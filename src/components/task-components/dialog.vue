@@ -3,7 +3,7 @@
     <div class="dialog-bg"></div>
     <div class="dialog">
       <form class="dialog-form" @submit.prevent="$emit('send')">              
-        <input type="text" @input="$emit('update:title',$event.target.value)" :value="hold.title">        
+        <input type="text" @input="$emit('update:title',$event.target.value)" :value="hold.title" placeholder="type title!">      
         <select @input="$emit('update:color',$event.target.value)" :value="hold.color">
             <option value="red">🔴</option>
             <option value="green">🟢</option>
@@ -11,8 +11,17 @@
             <option value="blue">🔵</option>
             <option value="pink">🟣</option>
         </select>
+        <select @input="$emit('update:minute',$event.target.value)" :value="hold.minute">
+            <option disabled value="">minute</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="60">60</option>
+            <option value="90">90</option>
+        </select>
         <div class="button-wrapper">
-          <button type="button" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>          
+          <button type="button" class="ok-button" @click="toggleDialog();emitData()">OK</button>          
+          <!-- <button type="button" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>           -->
           <button class="cancel-button" type="button" @click="toggleDialog()">cancel</button>
         </div>
       </form>
@@ -24,15 +33,19 @@ export default {
   props: {
     hold: {
       type: Object,
-      default: () => ({})
+      default: () => ({        
+      })
     }
   },
   data: ()=> ({
   }),
-  methods: {
+  methods: {    
     toggleDialog: function() {
       this.isDialog = false;
-      this.$emit('toggle',this.isDialog )
+      this.$emit('toggle',this.isDialog );
+    },
+    emitData: function() {
+      this.$emit('submit');
     },
   }
 };

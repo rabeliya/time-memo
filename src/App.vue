@@ -18,7 +18,7 @@
 
 <script>
 import "normalize.css";
-import TaskCard from "./components/taskCard.vue";
+import TaskCard from "./components/task-card.vue";
 import MemoApp from "./components/memo.vue";
 import PageHeader from "./components/header.vue";
 import TodoApp from "./components/todo.vue";
