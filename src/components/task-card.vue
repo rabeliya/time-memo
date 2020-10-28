@@ -1,7 +1,7 @@
 <template>
   <div>
     <OptionDialog v-if="this.isDialog" v-bind:value="isDialog" @toggle="reflectDialog" v-bind.sync="hold" @submit="createCard()"/>
-    <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog"/>
+    <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog" @submit="reflectEditingCard()"/>
     <ul class="card-list">
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">        
         <span class="delete-card-button" @click="deleteCard(index)">[×]</span>
@@ -9,7 +9,7 @@
         <p class="card-header">
           <span class="card-color" v-bind:style="{background:cards[index].color }"></span>
           <span>{{ cards[index].minute }}</span>
-          {{ cards[index].title }}</p>
+          {{ cards[index].title }}</p>          
         <!-- <p class="time-display">{{ cards[index].calcedTime }}</p> -->                    
         <p class="time-display">{{ calcedTime(index) }}</p>        
         <div class="button-wrapper">
@@ -47,11 +47,7 @@ export default {
     },
     isDialog: false,
     isEditDialog: false,
-    // calcedTime: function(index) {
-    //   this.cards[index].minute * this.cards[index].count;
-    // },
     hold:
-      // { title: "", color: "",minute:"",count:0,calcedTime:0},
       { title: "", color: "",minute:"",count:0}
   }),
   methods: {
@@ -66,8 +62,7 @@ export default {
         title: this.hold.title,
         color: this.hold.color,
         minute: this.hold.minute,
-        count: this.hold.count,
-        // calcedTime: this.hold.calcedTime        
+        count: this.hold.count,    
       };
       this.cards.push(card);
       this.hold.title = "";
@@ -76,12 +71,10 @@ export default {
     },
     addMin(index) {
       this.cards[index].count ++;
-      // this.cards.calcedTime = this.cards.minute * this.count;
     },
     removeMin(index) {
       if(this.cards[index].count > 0) {        
         this.cards[index].count --;
-        // this.cards.calcedTime = this.cards.minute * this.count;
       }
     },
        calcedTime(index) {
@@ -97,21 +90,22 @@ export default {
           this.editingCard.count = this.cards[index].count;                   
           this.editingCard.cardIndex = index;                   
     },
+    reflectEditingCard() {
+      const cardIndex = this.editingCard.cardIndex;
+            const resultCard = {
+        title: this.editingCard.title,
+        color: this.editingCard.color,
+        minute: this.editingCard.minute,
+        count: this.editingCard.count,    
+      };
+      this.cards.splice(cardIndex,1,resultCard)
+    },
     deleteCard(index) {
       if (confirm("delete OK ?")) {
         this.cards.splice(index, 1);
       }
     },
-  },
-  // computed: {
-  //   editedCard: {
-  //     function () {        
-  //       if(this.cards.length >0) {
-  //          this.cards[this.editingCard.cardIndex] = this.editingCard;
-  //       }      
-  //     }
-  //   } 
-  // }
+  }
 }
 </script>
 <style lang="scss" scoped>

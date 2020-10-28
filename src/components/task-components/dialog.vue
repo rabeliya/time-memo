@@ -21,7 +21,6 @@
         </select>
         <div class="button-wrapper">
           <button type="button" class="ok-button" @click="toggleDialog();emitData()">OK</button>          
-          <!-- <button type="button" class="ok-button" @click="toggleDialog();$emit('submit')">OK</button>           -->
           <button class="cancel-button" type="button" @click="toggleDialog()">cancel</button>
         </div>
       </form>

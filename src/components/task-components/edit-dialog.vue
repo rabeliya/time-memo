@@ -23,7 +23,7 @@
           回
         </p> -->
         <div class="button-wrapper">
-          <button type="button" class="ok-button" @click="closeEditDialog()">OK</button>          
+          <button type="button" class="ok-button" @click="closeEditDialog();emitData()">OK</button>          
           <button class="cancel-button" type="button" @click="closeEditDialog()">cancel</button>
         </div>
       </form>      
