@@ -3,12 +3,13 @@
     <PageHeader />
     <div class="apps-wrapper">
       <div class="main-app">
-        <TaskCard />
+        <TaskCard @cards="reflectCards()"/>
       </div>
       <div class="side-app">
         <div id="app">
           <MemoApp />
           <TodoApp />
+          <TimeGraph />
         </div>
       </div>
     </div>
@@ -22,6 +23,7 @@ import TaskCard from "./components/task-card.vue";
 import MemoApp from "./components/memo.vue";
 import PageHeader from "./components/header.vue";
 import TodoApp from "./components/todo.vue";
+import TimeGraph from "./components/time-graph.vue";
 
 export default {
   name: "App",
@@ -29,9 +31,17 @@ export default {
     MemoApp,
     PageHeader,
     TodoApp,
-    TaskCard
+    TaskCard,
+    TimeGraph
   },
-};
+  props: {
+  },
+  methods: {
+    reflectCards: function(newValue) {
+      this.cards = newValue;
+    }
+  }
+}
 </script>
 <style lang="scss">
 .wrapper {

@@ -18,10 +18,6 @@
             <option value="60">60</option>
             <option value="90">90</option>
         </select>
-        <!-- <p>現在のカウント数は
-          <input type="text" v-model="countComputed">
-          回
-        </p> -->
         <div class="button-wrapper">
           <button type="button" class="ok-button" @click="closeEditDialog();emitData()">OK</button>          
           <button class="cancel-button" type="button" @click="closeEditDialog()">cancel</button>
@@ -34,15 +30,10 @@
 export default {
   props: {
     isEditDialog: Boolean,
-    // editingCard: {
-    //   type: Object,
-    //   default: () => ({        
-    //   })
-    // },  
     title: String,
     color: String,
     minute: String,
-    count: Number,
+    totalTime: Number,
     cardIndex: Number,      
   },
   data: ()=> ({
@@ -81,12 +72,12 @@ export default {
         this.$emit("update:minute", newValue);
       }
     },
-    countComputed: {
+    totalTimeComputed: {
       get: function() {
-        return this.count;
+        return this.totalTime;
       },
       set: function(newValue) {
-        this.$emit("update:count", newValue);
+        this.$emit("update:totalTime", newValue);
       }
     },
     indexComputed: {

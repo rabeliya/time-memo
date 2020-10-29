@@ -12,7 +12,7 @@
             <option value="pink">🟣</option>
         </select>
         <select @input="$emit('update:minute',$event.target.value)" :value="hold.minute">
-            <option disabled value="">minute</option>
+            <option disabled value="">minute</option>            
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="30">30</option>

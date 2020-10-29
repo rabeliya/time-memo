@@ -9,12 +9,11 @@
         <p class="card-header">
           <span class="card-color" v-bind:style="{background:cards[index].color }"></span>
           <span>{{ cards[index].minute }}</span>
-          {{ cards[index].title }}</p>          
-        <!-- <p class="time-display">{{ cards[index].calcedTime }}</p> -->                    
-        <p class="time-display">{{ calcedTime(index) }}</p>        
+          {{ cards[index].title }}</p>                                  
+        <p class="time-display">{{ cards[index].totalTime }}</p>        
         <div class="button-wrapper">
-          <button class="plus button" @click="addMin(index)">+</button>                  
-          <button class="minus button" @click="removeMin(index)">-</button>
+          <button class="minus button" @click="removeTime(index)">-</button>
+          <button class="plus button" @click="addTime(index)">+</button>                  
         </div>
       </li>
       <li>
@@ -36,19 +35,18 @@ export default {
     EditDialog
   },
   data: () => ({
-    cards: [],
-    // editingCard:[],
+    cards: [],   
     editingCard:{
       title:"",
       color:"",
       minute:"",
-      count:"",
+      totalTime:"",
       cardIndex:"",
     },
     isDialog: false,
     isEditDialog: false,
     hold:
-      { title: "", color: "",minute:"",count:0}
+      { title: "", color: "",minute:0,totalTime:0}
   }),
   methods: {
     reflectDialog(newValue) {
@@ -62,24 +60,23 @@ export default {
         title: this.hold.title,
         color: this.hold.color,
         minute: this.hold.minute,
-        count: this.hold.count,    
+        totalTime: this.hold.totalTime,    
       };
       this.cards.push(card);
       this.hold.title = "";
       this.hold.color = "";
       this.hold.minute = "";      
     },
-    addMin(index) {
-      this.cards[index].count ++;
+    addTime(index) {
+      this.cards[index].totalTime += parseInt(this.cards[index].minute);
     },
-    removeMin(index) {
-      if(this.cards[index].count > 0) {        
-        this.cards[index].count --;
+    removeTime(index) {
+      if(this.cards[index].totalTime > 0 && this.cards[index].totalTime > this.cards[index].minute) {        
+        this.cards[index].totalTime -= parseInt(this.cards[index].minute);
+      } else {
+        this.cards[index].totalTime = 0;
       }
-    },
-       calcedTime(index) {
-      return this.cards[index].minute * this.cards[index].count;
-    },
+    },       
     showEditDialog() {
       this.isEditDialog = true;
     },
@@ -87,7 +84,7 @@ export default {
           this.editingCard.title = this.cards[index].title;
           this.editingCard.color = this.cards[index].color;
           this.editingCard.minute = this.cards[index].minute;
-          this.editingCard.count = this.cards[index].count;                   
+          this.editingCard.totalTime = this.cards[index].totalTime;                   
           this.editingCard.cardIndex = index;                   
     },
     reflectEditingCard() {
@@ -96,7 +93,7 @@ export default {
         title: this.editingCard.title,
         color: this.editingCard.color,
         minute: this.editingCard.minute,
-        count: this.editingCard.count,    
+        totalTime: this.editingCard.totalTime,    
       };
       this.cards.splice(cardIndex,1,resultCard)
     },
@@ -105,6 +102,16 @@ export default {
         this.cards.splice(index, 1);
       }
     },
+  },  
+  computed: {
+    cardsComputed: {
+      get: function() {
+        return this.cards;
+      },
+      set: function(newValue) {
+        this.cards.$emit("cards", newValue);
+      }
+    }
   }
 }
 </script>
