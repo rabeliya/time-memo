@@ -112,7 +112,18 @@ export default {
         this.cards.$emit("cards", newValue);
       }
     }
-  }
+  },
+  watch: {
+    cards: {
+      handler: function () {
+        localStorage.setItem("cards", JSON.stringify(this.cards));
+      },
+      deep: true,
+    },
+  },
+  mounted: function () {
+    this.cards = JSON.parse(localStorage.getItem("cards")) || [];
+  },
 }
 </script>
 <style lang="scss" scoped>
