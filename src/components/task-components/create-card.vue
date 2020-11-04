@@ -3,24 +3,16 @@
 </template>
 <script>
 export default {
-  props: {    
-    value:Boolean
+  props: {        
+    isDialog: Boolean,
   },
-  data: ()=> ({
-    dialogValue: false,
+  data: ()=> ({    
   }),
   methods: {
-    toggleDialog: function() {
-      this.dialogValue = ! this.dialogValue;
-      this.$emit('toggle',this.dialogValue )      
+    toggleDialog: function() {      
+      this.$emit('showDialog',this.isDialog )      
     }
   },
-    watch: {
-    value: function(newValue) {
-      this.dialogValue = newValue;
-    }
-  }
-
 };
 </script>
 <style lang="scss" scoped>

@@ -5,21 +5,43 @@
 </template>
 <script>
 export default {
-  props: {
-    cards: {
-      type: Object,
-      default: () => ({})
-    }
+  props: {    
   },
   data: ()=> ({
-
+    cards: [],
+    labels:[],   
   }),
   methods: {
-
+    makeLavel: function() {      
+      
+    }
+  },  
+  mounted: function () {
+    this.cards = JSON.parse(localStorage.getItem("cards")) || [];
   },
-  comuputed: {
-
-  }
+  // watchは登録したプロパティの変更を見て実行される
+  // watch: {
+  //   cards: {
+  //     reflectLabels: function() {
+  //       // cardsのobjのtitleとtotalTimeのみをlabelsに反映させたい
+  //       // this.labels = [...this.cards];
+  //     }
+  //   }
+  // },
+  // computed: {
+  //   labelComputed: {      
+  //     get: function() {
+  //       return this.labels;
+  //     },
+  //     // set: function() {
+  //     //   for(const obj of this.cards) {          
+  //     //     this.labels.push(obj.slice(0,2))
+  //     //   }         
+  //     //     this.labels = [...this.cards]
+  //     //   this.labels.push([...this.cards].item.slice(0,2))
+  //     // }
+  //   },    
+  // }
 }
 </script>
 <style lang="scss" scoped>

@@ -2,16 +2,16 @@
   <div class="dialog-wrapper">
     <div class="dialog-bg"></div>
     <div class="dialog">
-      <form class="dialog-form" @submit.prevent="$emit('send')">              
-        <input type="text" @input="$emit('update:title',$event.target.value)" :value="hold.title" placeholder="type title!">      
-        <select @input="$emit('update:color',$event.target.value)" :value="hold.color">
+      <form class="dialog-form">              
+        <input type="text" v-model="titleComputed" placeholder="type title!">              
+        <select v-model="colorComputed">        
             <option value="red">🔴</option>
             <option value="green">🟢</option>
             <option value="yellow">🟡</option>
             <option value="blue">🔵</option>
             <option value="pink">🟣</option>
         </select>
-        <select @input="$emit('update:minute',$event.target.value)" :value="hold.minute">
+        <select v-model="minuteComputed">        
             <option disabled value="">minute</option>            
             <option value="10">10</option>
             <option value="25">25</option>
@@ -30,24 +30,48 @@
 <script>
 export default {
   props: {
-    hold: {
-      type: Object,
-      default: () => ({        
-      })
-    }
+    isDialog: Boolean,    
+    title: String,
+    color: String,
+    minute: String,
   },
   data: ()=> ({
   }),
   methods: {    
-    toggleDialog: function() {
-      this.isDialog = false;
+    toggleDialog: function() {      
       this.$emit('toggle',this.isDialog );
     },
     emitData: function() {
       this.$emit('submit');
     },
-  }
-};
+  },
+  computed: {
+    titleComputed: {
+      get: function() {
+        return this.title;        
+      },
+      set: function(newValue) {
+        this.$emit("update:title", newValue);
+      }
+    },
+    colorComputed: {
+      get: function() {
+        return this.color;        
+      },
+      set: function(newValue) {
+        this.$emit("update:color", newValue);
+      }
+    },
+    minuteComputed: {
+      get: function() {
+        return this.minute;        
+      },
+      set: function(newValue) {
+        this.$emit("update:minute", newValue);
+      }
+    },
+  }    
+}
 </script>
 <style lang="scss" scoped>
 .dialog-wrapper {

@@ -1,23 +1,23 @@
 <template>
   <div>
-    <OptionDialog v-if="this.isDialog" v-bind:value="isDialog" @toggle="reflectDialog" v-bind.sync="hold" @submit="createCard()"/>
-    <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog" @submit="reflectEditingCard()"/>
+    <OptionDialog v-if="this.isDialog" :isDialog="isDialog" @toggle="reflectCloseDialog" v-bind.sync="hold" @submit="emitHoldData()"/>
+    <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog" @submit="emitEditCard()"/>
     <ul class="card-list">
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">        
-        <span class="delete-card-button" @click="deleteCard(index)">[×]</span>
-        <span class="edit-card" @click="editCard(index);showEditDialog()">...</span>
+        <span class="delete-card-button" @click="emitDelete(index)">[×]</span>
+        <span class="edit-card" @click="editCard(index);emitShowEditDialog()">...</span>
         <p class="card-header">
           <span class="card-color" v-bind:style="{background:cards[index].color }"></span>
           <span>{{ cards[index].minute }}</span>
           {{ cards[index].title }}</p>                                  
         <p class="time-display">{{ cards[index].totalTime }}</p>        
         <div class="button-wrapper">
-          <button class="minus button" @click="removeTime(index)">-</button>
-          <button class="plus button" @click="addTime(index)">+</button>                  
+          <button class="minus button" @click="emitRemoveTime(index)">-</button>
+          <button class="plus button" @click="emitAddTime(index)">+</button>                  
         </div>
       </li>
       <li>
-        <CreateCard @toggle="reflectDialog" v-bind:value="isDialog"/>
+        <CreateCard @showDialog="reflectDialog" :isDialog="isDialog"/>
       </li>
     </ul>
   </div>
@@ -28,102 +28,65 @@ import EditDialog from "./task-components/edit-dialog.vue";
 import CreateCard from "./task-components/create-card.vue";
 
 export default {
-  name: "App",
+  name: "TaskCard",
   components: {
     OptionDialog,
     CreateCard,
     EditDialog
   },
-  data: () => ({
-    cards: [],   
+  props: {
+    isEditDialog: Boolean,
+    isDialog: Boolean,    
+    title: String,
+    color: String,
+    minute: String,
+    cards: Array,
+  },
+  data: () => ({      
     editingCard:{
       title:"",
       color:"",
       minute:"",
       totalTime:"",
       cardIndex:"",
-    },
-    isDialog: false,
-    isEditDialog: false,
+    },    
     hold:
-      { title: "", color: "",minute:0,totalTime:0}
+      { title: "", color: "",minute:"0",totalTime:0}
   }),
   methods: {
     reflectDialog(newValue) {
-      this.isDialog = newValue;
+      this.$emit('toggleDialog', newValue)            
     },
-    reflectEditDialog(newValue) {
-      this.isEditDialog = newValue;
+    reflectCloseDialog(newValue) {
+      this.$emit('closeDialog', newValue)            
     },
-    createCard() {
-            const card = {
-        title: this.hold.title,
-        color: this.hold.color,
-        minute: this.hold.minute,
-        totalTime: this.hold.totalTime,    
-      };
-      this.cards.push(card);
-      this.hold.title = "";
-      this.hold.color = "";
-      this.hold.minute = "";      
+    reflectEditDialog(newValue) {      
+      this.$emit('closeEditDialog', newValue)      
     },
-    addTime(index) {
-      this.cards[index].totalTime += parseInt(this.cards[index].minute);
+    emitAddTime(index) {
+      this.$emit('addTime',index);
     },
-    removeTime(index) {
-      if(this.cards[index].totalTime > 0 && this.cards[index].totalTime > this.cards[index].minute) {        
-        this.cards[index].totalTime -= parseInt(this.cards[index].minute);
-      } else {
-        this.cards[index].totalTime = 0;
-      }
-    },       
-    showEditDialog() {
-      this.isEditDialog = true;
+    emitRemoveTime(index) {
+      this.$emit('removeTime',index);
     },
-    editCard(index) {
-          this.editingCard.title = this.cards[index].title;
-          this.editingCard.color = this.cards[index].color;
-          this.editingCard.minute = this.cards[index].minute;
-          this.editingCard.totalTime = this.cards[index].totalTime;                   
-          this.editingCard.cardIndex = index;                   
+    emitShowEditDialog() {
+      this.$emit('showEditDialog', this.isEditDialog)      
     },
-    reflectEditingCard() {
-      const cardIndex = this.editingCard.cardIndex;
-            const resultCard = {
-        title: this.editingCard.title,
-        color: this.editingCard.color,
-        minute: this.editingCard.minute,
-        totalTime: this.editingCard.totalTime,    
-      };
-      this.cards.splice(cardIndex,1,resultCard)
+    emitHoldData() {
+      this.$emit("receiveHold",this.hold);      
     },
-    deleteCard(index) {
-      if (confirm("delete OK ?")) {
-        this.cards.splice(index, 1);
-      }
+    editCard(index) {          
+      // 参照渡しにならないための工夫          
+          const holdObj = {...this.cards[index],cardIndex:index};                   
+          this.editingCard = holdObj;
+    },
+    emitEditCard() {
+      this.$emit('receiveEditedCard',this.editingCard);      
+    },
+    emitDelete(index) {      
+      this.$emit('deleteCard',index)      
     },
   },  
-  computed: {
-    cardsComputed: {
-      get: function() {
-        return this.cards;
-      },
-      set: function(newValue) {
-        this.cards.$emit("cards", newValue);
-      }
-    }
-  },
-  watch: {
-    cards: {
-      handler: function () {
-        localStorage.setItem("cards", JSON.stringify(this.cards));
-      },
-      deep: true,
-    },
-  },
-  mounted: function () {
-    this.cards = JSON.parse(localStorage.getItem("cards")) || [];
-  },
 }
 </script>
 <style lang="scss" scoped>

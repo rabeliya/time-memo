@@ -34,17 +34,16 @@ export default {
     color: String,
     minute: String,
     totalTime: Number,
-    cardIndex: Number,      
+    cardIndex: Number,    
   },
   data: ()=> ({
   }),
   methods: {    
-    closeEditDialog: function() {
-      this.isEditDialog = false;
+    closeEditDialog: function() {      
       this.$emit('closeEditDialog',this.isEditDialog );
     },
     emitData: function() {
-      this.$emit('submit');
+      this.$emit('submit');      
     },
   },
   computed: {

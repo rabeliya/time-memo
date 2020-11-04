@@ -3,7 +3,16 @@
     <PageHeader />
     <div class="apps-wrapper">
       <div class="main-app">
-        <TaskCard @cards="reflectCards()"/>
+        <TaskCard @showEditDialog="reflectShowEditDialog" @closeEditDialog="reflectCloseEditDialog"
+        @closeDialog="reflectCloseDialog" 
+        @toggleDialog="reflectDialog" :isDialog="isDialog" :isEditDialog="isEditDialog"
+        v-bind.sync="hold"
+        :cards="cards"
+        @receiveHold="createCard"
+        @deleteCard="deleteCard"
+        @receiveEditedCard="reflectEditCard"
+        @addTime="addTime"
+        @removeTime="removeTime"/>       
       </div>
       <div class="side-app">
         <div id="app">
@@ -34,13 +43,77 @@ export default {
     TaskCard,
     TimeGraph
   },
-  props: {
-  },
+  data: () => ({
+    cards: [],
+    isEditDialog: false,    
+    isDialog: false,    
+    hold: 
+      { title: "", color: "",minute:"0",totalTime:0}      
+  }),
   methods: {
-    reflectCards: function(newValue) {
+    setCards(newValue) {
       this.cards = newValue;
-    }
-  }
+    },
+    reflectShowEditDialog(newValue) {
+      this.isEditDialog = newValue;
+      this.isEditDialog = true;
+    },
+    reflectCloseEditDialog(newValue) {
+      this.isEditDialog = newValue;
+      this.isEditDialog = false;
+    },
+    reflectDialog(newValue) {
+      this.isDialog = newValue;
+      this.isDialog = !this.isDialog;
+    },    
+    reflectCloseDialog(newValue) {
+      this.isDialog = newValue;
+      this.isDialog = !this.isDialog;
+    },
+    createCard(newValue) {      
+      this.hold = newValue;
+      const card = {
+        title: this.hold.title,
+        color: this.hold.color,
+        minute: this.hold.minute,
+        totalTime: this.hold.totalTime,    
+      };
+      this.cards.push(card);   
+      this.hold.title = "";
+      this.hold.color = "";
+      this.hold.minute = "";
+    },
+    deleteCard(index) {
+      if (confirm("delete OK ?")) {
+        this.cards.splice(index, 1);
+      }
+    },    
+    reflectEditCard(editedCard) {      
+      const cardIndex = editedCard.cardIndex;
+      this.cards.splice(cardIndex,1,editedCard)
+    },
+    addTime(index) {      
+      this.cards[index].totalTime += parseInt(this.cards[index].minute);
+    },
+    removeTime(index) {      
+      if(this.cards[index].totalTime > 0 && this.cards[index].totalTime > this.cards[index].minute) {        
+        this.cards[index].totalTime -= parseInt(this.cards[index].minute);
+      } else {
+        this.cards[index].totalTime = 0;
+      }
+    },       
+  },  
+  watch: {
+    cards: {
+      handler: function () {
+        localStorage.setItem("cards", JSON.stringify(this.cards));
+      },
+      deep: true,
+    },
+  },
+  mounted: function () {
+    this.cards = JSON.parse(localStorage.getItem("cards")) || [];
+  },   
 }
 </script>
 <style lang="scss">
