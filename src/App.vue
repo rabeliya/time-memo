@@ -12,13 +12,14 @@
         @deleteCard="deleteCard"
         @receiveEditedCard="reflectEditCard"
         @addTime="addTime"
-        @removeTime="removeTime"/>       
+        @removeTime="removeTime"
+        @takeCards="takeCards"/>       
       </div>
       <div class="side-app">
         <div id="app">
           <MemoApp />
           <TodoApp />
-          <TimeGraph />
+          <TimeGraph :cards="cards" />
         </div>
       </div>
     </div>
@@ -45,6 +46,7 @@ export default {
   },
   data: () => ({
     cards: [],
+    labels: [],
     isEditDialog: false,    
     isDialog: false,    
     hold: 
@@ -78,7 +80,7 @@ export default {
         minute: this.hold.minute,
         totalTime: this.hold.totalTime,    
       };
-      this.cards.push(card);   
+      this.cards.push(card);            
       this.hold.title = "";
       this.hold.color = "";
       this.hold.minute = "";
@@ -101,18 +103,21 @@ export default {
       } else {
         this.cards[index].totalTime = 0;
       }
-    },       
+    },
+    takeCards(newValue) {
+      this.cards= newValue;
+    }       
   },  
   watch: {
     cards: {
       handler: function () {
-        localStorage.setItem("cards", JSON.stringify(this.cards));
+        localStorage.setItem("cards", JSON.stringify(this.cards));        
       },
       deep: true,
     },
   },
   mounted: function () {
-    this.cards = JSON.parse(localStorage.getItem("cards")) || [];
+    this.cards = JSON.parse(localStorage.getItem("cards")) || [];    
   },   
 }
 </script>

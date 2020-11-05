@@ -7,10 +7,10 @@
         <span class="delete-card-button" @click="emitDelete(index)">[×]</span>
         <span class="edit-card" @click="editCard(index);emitShowEditDialog()">...</span>
         <p class="card-header">
-          <span class="card-color" v-bind:style="{background:cards[index].color }"></span>
-          <span>{{ cards[index].minute }}</span>
-          {{ cards[index].title }}</p>                                  
-        <p class="time-display">{{ cards[index].totalTime }}</p>        
+          <span class="card-color" v-bind:style="{background:card.color }"></span>
+          <span>{{ card.minute }}</span>
+          {{ card.title }}</p>                                  
+        <p class="time-display">{{ card.totalTime }}</p>        
         <div class="button-wrapper">
           <button class="minus button" @click="emitRemoveTime(index)">-</button>
           <button class="plus button" @click="emitAddTime(index)">+</button>                  
