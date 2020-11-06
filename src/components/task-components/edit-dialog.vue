@@ -3,7 +3,8 @@
     <div class="dialog-bg"></div>
     <div class="dialog">
       <form class="dialog-form">                 
-        <input type="text" v-model="titleComputed">
+        <input type="text" v-model="titleComputed" :class="{ error : $v.title.$error,'form-control': true }">
+        <span v-if="$v.title.$error" class="error-message">Type any title !</span>
         <select v-model="colorComputed">
             <option value="red">🔴</option>
             <option value="green">🟢</option>
@@ -19,7 +20,7 @@
             <option value="90">90</option>
         </select>
         <div class="button-wrapper">
-          <button type="button" class="ok-button" @click="closeEditDialog();emitData()">OK</button>          
+          <button type="button" class="ok-button" @click="submitForm">OK</button>          
           <button class="cancel-button" type="button" @click="closeEditDialog()">cancel</button>
         </div>
       </form>      
@@ -27,6 +28,8 @@
   </div>
 </template>
 <script>
+import { required } from "vuelidate/lib/validators";
+
 export default {
   props: {
     isEditDialog: Boolean,
@@ -38,13 +41,24 @@ export default {
   },
   data: ()=> ({
   }),
+  validations: {
+      title: {
+        required,        
+      }      
+  },
   methods: {    
     closeEditDialog: function() {      
       this.$emit('closeEditDialog',this.isEditDialog );
-    },
-    emitData: function() {
-      this.$emit('submit');      
-    },
+    },    
+    submitForm(){
+        this.$v.$touch();
+        if(this.$v.$invalid){
+            alert('input all forms !');
+        }else{
+            this.$emit('closeEditDialog',this.isEditDialog );
+            this.$emit('submit');
+        }
+    }
   },
   computed: {
     titleComputed: {
@@ -92,6 +106,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.error {
+	color: #8a0421;
+	border-color: #dd0f3b;
+  background-color: #ffd9d9;
+}
+.error-message {
+  color: #8a0421;
+}
 .dialog-wrapper {
   position: absolute;
   display: flex;

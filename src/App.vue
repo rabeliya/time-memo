@@ -50,7 +50,7 @@ export default {
     isEditDialog: false,    
     isDialog: false,    
     hold: 
-      { title: "", color: "",minute:"0",totalTime:0}      
+      { title: "", color: "",minute:"",totalTime:0}      
   }),
   methods: {
     setCards(newValue) {

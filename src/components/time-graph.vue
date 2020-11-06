@@ -109,7 +109,7 @@
       padding: 0;
       margin: 0;
       li {
-        height: 20px;
+        height: 20px;        
       }
     }
     .label-wrapper {

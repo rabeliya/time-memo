@@ -51,7 +51,7 @@ export default {
       cardIndex:"",
     },    
     hold:
-      { title: "", color: "",minute:"0",totalTime:0}
+      { title: "", color: "",minute:"",totalTime:0}
   }),
   methods: {
     reflectDialog(newValue) {
@@ -75,10 +75,9 @@ export default {
     emitHoldData() {
       this.$emit("receiveHold",this.hold);      
     },
-    editCard(index) {          
-      // 参照渡しにならないための工夫          
-          const holdObj = {...this.cards[index],cardIndex:index};                   
-          this.editingCard = holdObj;
+    editCard(index) {                     
+      const holdObj = {...this.cards[index],cardIndex:index};                   
+      this.editingCard = holdObj;
     },
     emitEditCard() {
       this.$emit('receiveEditedCard',this.editingCard);      
