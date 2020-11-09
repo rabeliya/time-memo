@@ -6,14 +6,16 @@
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">        
         <span class="delete-card-button" @click="emitDelete(index)">[×]</span>
         <span class="edit-card" @click="editCard(index);emitShowEditDialog()">...</span>
-        <p class="card-header">
-          <span class="card-color" v-bind:style="{background:card.color }"></span>
-          <span>{{ card.minute }}</span>
-          {{ card.title }}</p>                                  
-        <p class="time-display">{{ card.totalTime }}</p>        
-        <div class="button-wrapper">
-          <button class="minus button" @click="emitRemoveTime(index)">-</button>
-          <button class="plus button" @click="emitAddTime(index)">+</button>                  
+        <div class="card-contents">
+          <p class="card-header">
+            <span class="card-color" v-bind:style="{background:card.color }"></span>            
+            {{ card.title }}</p>                                  
+          <p class="time-display">{{ card.totalTime }} min</p>        
+          <div class="button-wrapper">
+            <button class="minus button" @click="emitRemoveTime(index)">-{{ card.minute }}min</button>
+            <button class="plus button" @click="emitAddTime(index)">+{{ card.minute }}min</button>                  
+          </div>
+
         </div>
       </li>
       <li>
@@ -100,16 +102,6 @@ li {
   flex-wrap: wrap;
   padding-inline-start: 0;  
   padding: 40px;
-  .card-header {
-    display: flex;        
-    .card-color {
-      display: block;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      margin-right: 16px;
-    }
-  }
   .task-card {
     background: #fff;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -119,6 +111,24 @@ li {
     margin-bottom: 40px;    
     .edit-card {
       cursor: pointer;
+    }
+  }
+  .card-contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    .card-header {
+      display: flex;
+      width: 100%;
+      margin: 0;    
+      .card-color {
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin-right: 16px;
+      }
     }
   }
 }

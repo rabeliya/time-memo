@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-wrapper">
-    <div class="dialog-bg"></div>
+    <div class="dialog-bg" @click="toggleDialog"></div>
     <div class="dialog">
       <form class="dialog-form">              
         <input type="text" v-model="titleComputed" placeholder="type title!" :class="{ error : $v.title.$error,'form-control': true }">              
@@ -25,7 +25,7 @@
         <span v-if="$v.minute.$error" class="error-message">select any minute !</span>
         <div class="button-wrapper">
           <button type="button" class="ok-button" @click="submitForm">OK</button>          
-          <button class="cancel-button" type="button" @click="toggleDialog()">cancel</button>
+          <button class="cancel-button" type="button" @click="toggleDialog">cancel</button>
         </div>
       </form>
     </div>
