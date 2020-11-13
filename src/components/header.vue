@@ -6,6 +6,9 @@
 <style lang="scss" scoped>
 .header {
   background: #000;
+  height: 60px;
+  width: 1vw;
+  position: fixed;
   h1 {
     font-size: 1rem;
     color: #fff;

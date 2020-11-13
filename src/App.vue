@@ -1,7 +1,18 @@
 <template>
   <div class="wrapper">
-    <PageHeader />
-    <div class="apps-wrapper">
+    <header class="header">
+      <h1>time-memo</h1>
+    </header>
+    <!-- <PageHeader class="header"/> -->
+    <div class="apps-wrapper">      
+      <div class="side-app">
+      <!-- <div class="side-app"  v-bind:style="{height:screenHeight}"> -->
+        <div id="app">
+          <MemoApp />
+          <TodoApp />
+          <TimeGraph :cards="cards" />
+        </div>
+      </div>
       <div class="main-app">
         <TaskCard @showEditDialog="reflectShowEditDialog" @closeEditDialog="reflectCloseEditDialog"
         @closeDialog="reflectCloseDialog" 
@@ -15,23 +26,15 @@
         @removeTime="removeTime"
         @takeCards="takeCards"/>       
       </div>
-      <div class="side-app">
-        <div id="app">
-          <MemoApp />
-          <TodoApp />
-          <TimeGraph :cards="cards" />
-        </div>
-      </div>
-    </div>
-    <footer class="footer">footer</footer>
+    </div>    
   </div>
 </template>
 
 <script>
-import "normalize.css";
+import "reset-css";
 import TaskCard from "./components/task-card.vue";
 import MemoApp from "./components/memo.vue";
-import PageHeader from "./components/header.vue";
+// import PageHeader from "./components/header.vue";
 import TodoApp from "./components/todo.vue";
 import TimeGraph from "./components/time-graph.vue";
 
@@ -39,7 +42,7 @@ export default {
   name: "App",
   components: {
     MemoApp,
-    PageHeader,
+    // PageHeader,
     TodoApp,
     TaskCard,
     TimeGraph
@@ -50,7 +53,7 @@ export default {
     isEditDialog: false,    
     isDialog: false,    
     hold: 
-      { title: "", color: "",minute:"",totalTime:0}      
+      { title: "",minute:"",totalTime:0}      
   }),
   methods: {
     setCards(newValue) {
@@ -76,13 +79,11 @@ export default {
       this.hold = newValue;
       const card = {
         title: this.hold.title,
-        color: this.hold.color,
         minute: this.hold.minute,
         totalTime: this.hold.totalTime,    
       };
       this.cards.push(card);            
-      this.hold.title = "";
-      this.hold.color = "";
+      this.hold.title = "";      
       this.hold.minute = "";
     },
     deleteCard(index) {
@@ -118,19 +119,37 @@ export default {
   },
   mounted: function () {
     this.cards = JSON.parse(localStorage.getItem("cards")) || [];    
-  },   
+  },
+  computed: {
+    screenHeight() {      
+      const screenHeight = 	document.documentElement.clientHeight;         
+      return (screenHeight - 200) + 'px';
+    }
+  }
+     
 }
 </script>
 <style lang="scss">
-.wrapper {
+
+$header_h: 60px; 
+
+.wrapper {   
+  .header {
+    background: #000;
+    height: $header_h;
+    width: 100vw;
+    position: fixed;
+    z-index: 10;
+    h1 {
+      font-size: 1rem;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+  }
   .apps-wrapper {
     display: flex;
     justify-content: space-between;
-  }
-  .footer {
-    background: #000;
-    color: #fff;
-    font-size: 20px;
   }
 }
 
@@ -141,13 +160,25 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
+.main-app {
+  display: flex;
+  justify-content: center;
+  width: calc(100vw - 515px);  
+  position: absolute;
+  top: $header_h;
+  right: 0;
+  padding: 70px 0 70px 70px;
+}
 .side-app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 40px;
-  width: 400px;
-  background: #000;
+  position: fixed;
+  left: 0;
+  top: $header_h;
+  height: calc(100% - 60px);
+  overflow: auto;
+  padding: 0 50px;
+  background: #fff;
 }
 </style>

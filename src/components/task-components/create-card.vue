@@ -1,5 +1,5 @@
 <template>
-  <div class="create-card"><button class="open-dialog" @click="toggleDialog()">＋</button></div>
+  <div class="create-card"><img src="../../assets/plus.svg" alt="create-taskcard-button" class="create-card-button" @click="toggleDialog()" width="100"></div>
 </template>
 <script>
 export default {
@@ -23,8 +23,14 @@ export default {
   font-size: 1rem;
   width: 190px;
   height: 250px;
-  border: dashed 2px #333;
+  border: dashed 2px darkgray;
   padding: 20px;
   background: #fff;
+  .create-card-button {
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 </style>
