@@ -2,11 +2,9 @@
   <div class="wrapper">
     <header class="header">
       <h1>time-memo</h1>
-    </header>
-    <!-- <PageHeader class="header"/> -->
+    </header>    
     <div class="apps-wrapper">      
-      <div class="side-app">
-      <!-- <div class="side-app"  v-bind:style="{height:screenHeight}"> -->
+      <div class="side-app">      
         <div id="app">
           <MemoApp />
           <TodoApp />
@@ -34,21 +32,23 @@
 import "reset-css";
 import TaskCard from "./components/task-card.vue";
 import MemoApp from "./components/memo.vue";
-// import PageHeader from "./components/header.vue";
 import TodoApp from "./components/todo.vue";
 import TimeGraph from "./components/time-graph.vue";
 
 export default {
   name: "App",
   components: {
-    MemoApp,
-    // PageHeader,
+    MemoApp,    
     TodoApp,
     TaskCard,
     TimeGraph
   },
   data: () => ({
-    cards: [],
+    cards: [
+      {minute:"30",title:"Let's push +30!",totalTime:0},
+      {minute:"10",title:"Let's edit!",totalTime:0},
+      {minute:"60",title:"Delete All!",totalTime:0},
+      ],
     labels: [],
     isEditDialog: false,    
     isDialog: false,    
@@ -139,13 +139,7 @@ $header_h: 60px;
     height: $header_h;
     width: 100vw;
     position: fixed;
-    z-index: 10;
-    h1 {
-      font-size: 1rem;
-      color: #fff;
-      margin: 0;
-      padding: 20px;
-    }
+    z-index: 10;    
   }
   .apps-wrapper {
     display: flex;
@@ -154,16 +148,11 @@ $header_h: 60px;
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 .main-app {
-  display: flex;
-  justify-content: center;
-  width: calc(100vw - 515px);  
+  display: flex;  
+  width: calc(100vw - 437px);  
   position: absolute;
   top: $header_h;
   right: 0;

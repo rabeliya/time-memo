@@ -65,15 +65,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
 #todoApp {
-  background: #fff;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  background: $card-color;
+  box-shadow: $shadow;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -81,10 +76,6 @@ export default {
   min-height: 200px;
   padding: 20px;
   margin-bottom: 80px;
-  h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
   ul {
     display: flex;
     flex-direction: column;
@@ -98,8 +89,8 @@ export default {
       width: 240px;
       min-height: 40px;
       margin-bottom: 15px;
-      background: #f5f5f5 0% 0% no-repeat padding-box;
-      box-shadow: 0px 1px 2px #00000029;
+      background: $second-color;
+      box-shadow: $shadow;
       font-size: 1rem;
     }
   }
@@ -109,8 +100,8 @@ export default {
   form {
     font-size: 1rem;
     input[type="text"] {
-      background: #f5f5f5 0% 0% no-repeat padding-box;
-      box-shadow: 0px 1px 2px #00000029;
+      background: $second-color;
+      box-shadow: $shadow;
       width: 240px;
       height: 40px;
       border: none;      

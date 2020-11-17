@@ -1,6 +1,6 @@
 <template>
   <div class="card-wrapper">
-    <h2 class="card-title">Working Time</h2>
+    <h2>Working Time</h2>
     <p class="graph-tag">Total</p>
     <div class="total-time-wrapper">
       <p class="total-time">
@@ -28,7 +28,7 @@
       </li>
     </ul>
     <ul v-else>
-      <li>No task !</li>
+      <li class="no-task-info">No task !</li>
     </ul>
   </div>
 </template>
@@ -124,20 +124,19 @@
   li{
     list-style: none;
   }
+  .no-task-info {
+    margin-top: 30px;
+  }
   .card-wrapper {
-    background: #fff;  
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);  
+    background: $card-color;
+    box-shadow: $shadow;
     display: flex;  
     flex-direction: column;  
     align-items: center;
     width: 280px;
     min-height: 200px;
     margin-bottom: 120px;
-    padding: 20px;    
-    .card-title {
-      font-size: 20px;
-      margin-bottom: 25px;
-    }
+    padding: 20px;        
     .graph-tag {
       margin-bottom: 16px;
     }
@@ -148,7 +147,7 @@
       width: 120px;
       height: 50px;
       border-radius: 10%;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);  
+      box-shadow: $shadow;
       margin-bottom: 35px;
       .total-time {
         display: flex;
@@ -165,7 +164,7 @@
       display: flex;
       width: 250px;
       height: 20px;      
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);  
+      box-shadow: $shadow;
       padding: 0;
       margin: 0;
       li {
@@ -187,7 +186,7 @@
             height: 16px;
             border-radius: 50%;
             margin-right: 16px;
-            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);  
+            box-shadow: $shadow;
           }
           .card-name {
             margin-right: 14px;

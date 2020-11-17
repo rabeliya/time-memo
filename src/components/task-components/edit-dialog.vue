@@ -93,24 +93,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.error {
-	color: #8a0421;
-	border-color: #dd0f3b;
-  background-color: #ffd9d9!important;
-  font-size: 14px;
-}
-.error-message {
-  color: #8a0421;
-  font-size: 14px;
-  margin-top: -10px;
-  margin-bottom: 16px;
-}
 .dialog-wrapper {
   display: flex;
   justify-content: center;
@@ -136,7 +118,7 @@ export default {
     height: 300px;
     padding: 50px;
     opacity: 1;      
-    background: #F5F5F5;
+    background: $second-color;
     border-radius: 13px;
     .button-wrapper {
       display: flex;
@@ -152,21 +134,14 @@ export default {
         font-weight: bold;
         border: none;
         border-radius: 20px;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); 
-        cursor: pointer;
-        &:focus {
-          outline: none;
-        }
-        &:hover {
-          opacity:0.8;
-        }
+        box-shadow: $shadow;                 
       }
       .ok-button {
         background: #1473E6;
         color: #fff;        
       }
       .cancel-button {
-        border: darkgray 3px solid;
+        border: $second-border-color;
         color: #6e6e6e;
       }
     }
@@ -181,21 +156,22 @@ export default {
     width: 20%;
     font-size: 14px;
     margin-bottom: 8px;
-    border-bottom: #9f9f9f 1px solid;
+    padding-bottom: 1px;
+    border-bottom: $border-color;
   }
   .title-input {
     width: 100%;
     height: 24px;
     margin-bottom: 14px;
-    background: #F5F5F5;
-    border:darkgray 1px  solid;
+    background: $second-color;
+    border:$border-color;
   }  
   .time-input {
     width: 50px;
     height: 30px;
     margin-bottom: 70px;
-    background: #F5F5F5;  
-    border:darkgray 1px  solid;
+    background: $second-color;  
+    border:$border-color;
   }
 }
 </style>

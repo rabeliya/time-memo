@@ -13,36 +13,26 @@
 </template>
 <style lang="scss" scoped>
 
-#memo {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
+#memo {  
+  display: flex;  
+  flex-direction: column;  
   align-items: center;
-  background: #fff;
-  -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  background: $card-color;
+  box-shadow: $shadow;
   width: 280px;
-  height: 200px;
+  height: 250px;
   padding: 20px;
-  margin: 120px 0 80px;
-  h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
+  margin: 120px 0 80px;  
   .memo-space {
     width: 240px;
-    height: 120px;
-    background: #f5f5f5 0% 0% no-repeat padding-box;
+    height: 170px;
+    background: $second-color;
     overflow: visible;
+    padding: 16px;
     font-size: 16px;
     border: none;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);  
+    box-shadow: $shadow;
+    line-height: 1.3;
   }
 }
 </style>

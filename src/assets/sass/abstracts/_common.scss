@@ -1,0 +1,66 @@
+// ---------------- Card
+$shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+$card-color: #fff;
+$second-color: #f5f5f5;
+$title-size: 20px;
+
+// ---------------- Basics
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px;
+}
+
+h2 {
+  font-size: $title-size;
+  margin-bottom: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+.error {
+  color: #8a0421;
+  border-color: #dd0f3b;
+  background-color: #ffd9d9 !important;
+  font-size: 14px;
+}
+.error-message {
+  color: #8a0421;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
+//明日はこの色の反映
+$letter-color: #2c3e50;
+$border-color: #9f9f9f 1px solid;
+$second-border-color: darkgray 3px solid;
+
+// Parts
+button {
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  &:active {
+    box-shadow: none;
+  }
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+}

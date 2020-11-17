@@ -115,17 +115,6 @@ export default {
 }  
 </script>
 <style lang="scss" scoped>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-li {
-  list-style: none;
-}
-
-
 
 .card-list {
   display: flex;  
@@ -137,8 +126,8 @@ li {
      margin: var(--gap) 0 0 var(--gap);
   }  
   .task-card {
-    background: #fff;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    background: $card-color;
+    box-shadow: $shadow;
     width: 190px;
     height: 250px;
     padding: 16px; 
@@ -170,7 +159,7 @@ li {
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);        
+        box-shadow: $shadow;        
       }
       .card-title {
         margin: 0 auto;
@@ -182,7 +171,7 @@ li {
       align-items: center;
       width: 120px;
       height: 50px;
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+      box-shadow: $shadow;
       border-radius: 20px;
       margin-bottom: 27px;
       .total-min {
@@ -202,16 +191,9 @@ li {
         align-items: center;
         width: 60px;
         height: 35px;
-        background: #fff;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-        border: none;
+        background: $card-color;
+        box-shadow: $shadow;        
         border-radius: 30px;
-        &:active {          
-          box-shadow: none;
-        }
-        &:focus {
-          outline: 0;
-        }
         .codes {
           font-size: 24px;
           margin-right: 5px;          
