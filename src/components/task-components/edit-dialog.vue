@@ -3,17 +3,19 @@
     <div class="dialog-bg" @click="closeEditDialog"></div>
     <div class="dialog">
       <form class="dialog-form">
-        <label>Task Name</label>                   
-        <input type="text" class="title-input" v-model="titleComputed" :class="{ error : $v.title.$error,'form-control': true }">
-        <span v-if="$v.title.$error" class="error-message">Type any title !</span>                
-        <span v-if="!$v.title.maxLength" class="error-message">It's NOT within 16letters !</span>                <label>Time Span</label>  
-        <select class="time-input" v-model="minuteComputed">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-            <option value="60">60</option>
-            <option value="90">90</option>
-        </select>
+        <div class="input-content">
+          <label>Task Name</label>                   
+          <input type="text" class="title-input" v-model="titleComputed" :class="{ error : $v.title.$error,'form-control': true }">
+          <span v-if="$v.title.$error" class="error-message">Type any title !</span>                
+          <span v-if="!$v.title.maxLength" class="error-message">It's NOT within 16letters !</span>                <label>Time Span</label>  
+          <select class="time-input" v-model="minuteComputed">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="60">60</option>
+              <option value="90">90</option>
+          </select>
+        </div>
         <div class="button-wrapper">
           <button class="cancel-button" type="button" @click="closeEditDialog">cancel</button>
           <button type="button" class="ok-button" @click="submitForm">OK</button>          
@@ -116,7 +118,7 @@ export default {
     position: absolute;
     width: 500px;
     height: 300px;
-    padding: 50px;
+    padding: 40px;
     opacity: 1;      
     background: $second-color;
     border-radius: 13px;
@@ -125,6 +127,8 @@ export default {
       justify-content: space-between;
       width: 200px;
       align-self: flex-end;
+      position: relative;
+      z-index: 20;
       &.show {
         display: block;
       }
@@ -149,29 +153,34 @@ export default {
 }
 .dialog-form {
   display: flex;
-  flex-direction: column;  
-  width: 400px;
-  margin-bottom: 30px;
-  label {
-    width: 20%;
-    font-size: 14px;
-    margin-bottom: 8px;
-    padding-bottom: 1px;
-    border-bottom: $border-color;
-  }
-  .title-input {
-    width: 100%;
-    height: 24px;
-    margin-bottom: 14px;
-    background: $second-color;
-    border:$border-color;
-  }  
-  .time-input {
-    width: 50px;
-    height: 30px;
-    margin-bottom: 70px;
-    background: $second-color;  
-    border:$border-color;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 250px;
+  width: 400px;  
+  .input-content {
+    display: flex;
+    flex-direction: column;  
+    label {
+      width: 20%;
+      font-size: 14px;
+      margin-bottom: 8px;
+      padding-bottom: 1px;
+      border-bottom: $border-color;
+    }
+    .title-input {
+      width: 100%;
+      height: 24px;
+      margin-bottom: 14px;
+      background: $second-color;
+      border:$border-color;
+    }  
+    .time-input {
+      width: 50px;
+      height: 30px;
+      margin-bottom: 14px;
+      background: $second-color;  
+      border:$border-color;
+    }
   }
 }
 </style>

@@ -1,7 +1,11 @@
 <template>
   <div>
-    <OptionDialog v-if="this.isDialog" :isDialog="isDialog" @toggle="reflectCloseDialog" v-bind.sync="hold" @submit="emitHoldData()"/>
-    <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog" @submit="emitEditCard()"/>
+    <transition appear>
+      <OptionDialog v-if="this.isDialog" :isDialog="isDialog" @toggle="reflectCloseDialog" v-bind.sync="hold" @submit="emitHoldData()"/>    
+    </transition>
+    <transition>
+      <EditDialog v-if="isEditDialog" :value="isEditDialog" v-bind.sync="editingCard" @closeEditDialog="reflectEditDialog" @submit="emitEditCard()"/>    
+    </transition>
     <ul class="card-list">
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">
         <div class="card-header">
@@ -10,7 +14,7 @@
         </div>        
         <div class="card-contents">
           <div class="card-title-wrapper">
-            <span class="card-color" v-bind:style="   {background:cardColor(index) }">
+            <span class="card-color" v-bind:style="{background:cardColor(index) }">
             </span>
             <p class="card-title">            
               {{ card.title }}
@@ -201,5 +205,12 @@ export default {
       }
     }
   }
+}
+.v-enter-active, .v-leave-active {
+  transition: opacity .5s;
+}
+
+.v-enter, .v-leave-to {
+  opacity: 0;
 }
 </style>

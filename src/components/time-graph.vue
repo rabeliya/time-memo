@@ -39,8 +39,7 @@
     props: {
       cards: Array,
     },
-    data: () => ({        
-      
+    data: () => ({              
     }),  
     methods: {
     },
