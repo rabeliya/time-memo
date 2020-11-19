@@ -9,14 +9,14 @@
       </p>           
     </div>
     <ul class="progress-bar">
-      <li class="progress-color" v-for="(card,index) in cards" :key="card.id" v-bind:style="{background:cardColor(index),
+      <li class="progress-color" v-for="(card,index) in cards" :key="card.id" :style="{background:cardColor(index),
         width: barWidth(sortLabel(index).totalTime,totalMin) + 'px'}">      
       </li>
     </ul>
     <ul v-if="cards.length > 0" class="label-wrapper">
       <li v-for="(card,index) in cards" :key="card.id" class="data-label">
         <div class="name-group">
-          <span class="card-color" v-bind:style="{background:cardColor(index) }"></span>
+          <span class="card-color" :style="{background:cardColor(index) }"></span>
           <span class="card-name">
             {{ sortLabel(index).title }}
           </span>

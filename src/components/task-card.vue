@@ -11,7 +11,7 @@
         </div>        
         <div class="card-contents">
           <div class="card-title-wrapper">
-            <span class="card-color" v-bind:style="{background:cardColor(index)}">
+            <span class="card-color" :style="{background:cardColor(index)}">
             </span>
             <p class="card-title">     
               {{ card.title }}
@@ -21,8 +21,8 @@
               <p class="total-min">{{ card.totalTime }} <span class="mini-letter">min</span></p>        
           </div>                                  
           <div class="button-wrapper">
-            <button class="minus button pointer" @click="emitRemoveTime(index)"><span v-bind:style="   {color:cardColor(index)}" class="codes">-</span>{{ card.minute }}</button>
-            <button class="plus button pointer" @click="emitAddTime(index)"><span v-bind:style="   {color:cardColor(index)}" class="codes">+</span>{{ card.minute }}</button>                  
+            <button class="minus button pointer" @click="emitRemoveTime(index)"><span :style="   {color:cardColor(index)}" class="codes">-</span>{{ card.minute }}</button>
+            <button class="plus button pointer" @click="emitAddTime(index)"><span :style="   {color:cardColor(index)}" class="codes">+</span>{{ card.minute }}</button>                  
           </div>
         </div>
       </li>
