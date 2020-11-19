@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-wrapper">
-    <div class="dialog-bg" @click="toggleDialog"></div>
+    <div class="dialog-bg" @click="closeDialog"></div>
     <div class="dialog">
       <form class="dialog-form">
         <div class="input-content">
@@ -20,8 +20,8 @@
           <span v-if="$v.minute.$error" class="error-message">select any minute !</span>
         </div>
         <div class="button-wrapper">
-          <button class="cancel-button" type="button" @click="toggleDialog">cancel</button>
-          <button type="button" class="ok-button" @click="submitForm">OK</button>          
+          <button class="cancel-button pointer" type="button" @click="closeDialog">cancel</button>
+          <button type="button" class="ok-button pointer" @click="submitForm">OK</button>          
         </div>
       </form>
     </div>
@@ -35,6 +35,8 @@ export default {
     isDialog: Boolean,    
     title: String,    
     minute: String,
+    totalTime: Number,           
+    cardIndex: Number,
   },
   data: ()=> ({
   }),
@@ -49,16 +51,25 @@ export default {
     },
   },
   methods: {    
-    toggleDialog: function() {      
-      this.$emit('toggle',this.isDialog );
+    closeDialog: function() {      
+      this.$emit('closeDialog',this.isDialog );
     },    
     submitForm(){
         this.$v.$touch();
-        if(this.$v.$invalid){
-            alert('input all forms !');
-        }else{
-            this.$emit('toggle',this.isDialog );
-            this.$emit('submit');
+        if(this.cardIndex !== undefined) {
+            if(this.$v.$invalid){
+                alert('input all forms !');
+            }else{                
+                this.closeDialog();
+                this.$emit('submitEditCard');
+            }          
+        } else {
+            if(this.$v.$invalid){
+                alert('input all forms !');
+            }else{
+                this.closeDialog();
+                this.$emit('submit');
+            }
         }
     }
   },
@@ -77,6 +88,14 @@ export default {
       },
       set: function(newValue) {
         this.$emit("update:minute", newValue);
+      }
+    },
+    totalTimeComputed: {
+      get: function() {
+        return this.totalTime;
+      },
+      set: function(newValue) {
+        this.$emit("update:totalTime", newValue);
       }
     },
   }    
@@ -108,7 +127,7 @@ export default {
     height: 300px;
     padding: 40px;
     opacity: 1;      
-    background: $second-color;
+    background: $second-card-color;
     border-radius: 13px;
     .button-wrapper {
       display: flex;
@@ -133,7 +152,7 @@ export default {
         color: #fff;        
       }
       .cancel-button {
-        border: $second-border-color;
+        border: $button-border-color;
         color: #6e6e6e;
       }
     }
@@ -159,14 +178,14 @@ export default {
       width: 100%;
       height: 24px;
       margin-bottom: 14px;
-      background: $second-color;
+      background: $second-card-color;
       border:$border-color;
     }  
     .time-input {
       width: 50px;
       height: 30px;
       margin-bottom: 14px;
-      background: $second-color;  
+      background: $second-card-color;  
       border:$border-color;
     }
   }

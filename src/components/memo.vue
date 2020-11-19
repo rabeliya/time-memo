@@ -19,28 +19,28 @@
   align-items: center;
   background: $card-color;
   box-shadow: $shadow;
-  width: 280px;
+  width: 320px;
   height: 250px;
   padding: 20px;
   margin: 120px 0 80px;  
   .memo-space {
     width: 240px;
     height: 170px;
-    background: $second-color;
+    background: $second-card-color;
     overflow: visible;
     padding: 16px;
     font-size: 16px;
     border: none;
     box-shadow: $shadow;
     line-height: 1.3;
+    &:focus {
+      outline: none;
+    }
   }
 }
 </style>
 <script>
 export default {
-  props: {
-    value: String,
-  },
   data() {
     return {
       memo: "",

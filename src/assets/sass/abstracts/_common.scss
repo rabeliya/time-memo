@@ -1,8 +1,11 @@
 // ---------------- Card
 $shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-$card-color: #fff;
-$second-color: #f5f5f5;
 $title-size: 20px;
+
+$card-color: #fff;
+$second-card-color: #f5f5f5;
+$letter-color: #2c3e50;
+$border-color: #9f9f9f 1px solid;
 
 // ---------------- Basics
 *,
@@ -15,7 +18,7 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
-h1 {
+h1.site-title {
   color: #fff;
   font-size: 20px;
   font-weight: bold;
@@ -31,6 +34,10 @@ li {
   list-style: none;
 }
 
+input:focus {
+  outline: none;
+}
+
 .error {
   color: #8a0421;
   border-color: #dd0f3b;
@@ -44,15 +51,13 @@ li {
   margin-bottom: 16px;
 }
 
-//明日はこの色の反映
-$letter-color: #2c3e50;
-$border-color: #9f9f9f 1px solid;
-$second-border-color: darkgray 3px solid;
+// ---------------------  Parts
 
-// Parts
+$button-border-color: darkgray 3px solid;
+
 button {
+  align-items: center;
   border: none;
-  cursor: pointer;
   user-select: none;
   &:active {
     box-shadow: none;
@@ -60,6 +65,10 @@ button {
   &:focus {
     outline: 0;
   }
+}
+
+.pointer {
+  cursor: pointer;
   &:hover {
     opacity: 0.8;
   }

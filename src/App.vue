@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <header class="header">
-      <h1>time-memo</h1>
+      <h1 class="site-title">time-memo</h1>
     </header>    
     <div class="apps-wrapper">      
       <div class="side-app">      
@@ -12,17 +12,22 @@
         </div>
       </div>
       <div class="main-app">
-        <TaskCard @showEditDialog="reflectShowEditDialog" @closeEditDialog="reflectCloseEditDialog"
-        @closeDialog="reflectCloseDialog" 
-        @toggleDialog="reflectDialog" :isDialog="isDialog" :isEditDialog="isEditDialog"
-        v-bind.sync="hold"
-        :cards="cards"
+        <TaskCard 
+        @showDialog="reflectDialog" 
+        @toggleDialog="reflectDialog" 
         @receiveHold="createCard"
+        @resetHold="resetHold"
         @deleteCard="deleteCard"
-        @receiveEditedCard="reflectEditCard"
         @addTime="addTime"
         @removeTime="removeTime"
-        @takeCards="takeCards"/>       
+        @receiveEditedCard="reflectEditCard"
+        @submitEditCard="reflectEditCard"
+        @takeCards="takeCards"
+        @editCard="reflectEditToHold"
+        :hold="hold"
+        :isDialog="isDialog"
+        :cards="cards"
+        />               
       </div>
     </div>    
   </div>
@@ -56,25 +61,21 @@ export default {
       { title: "",minute:"",totalTime:0}      
   }),
   methods: {
+    resetHold() {
+      this.hold = {        
+        minute: "",
+        title: "",
+        totalTime: 0        
+      };
+      this.$delete(this.hold,'cardIndex')
+    },
     setCards(newValue) {
       this.cards = newValue;
-    },
-    reflectShowEditDialog(newValue) {
-      this.isEditDialog = newValue;
-      this.isEditDialog = true;
-    },
-    reflectCloseEditDialog(newValue) {
-      this.isEditDialog = newValue;
-      this.isEditDialog = false;
     },
     reflectDialog(newValue) {
       this.isDialog = newValue;
       this.isDialog = !this.isDialog;
     },    
-    reflectCloseDialog(newValue) {
-      this.isDialog = newValue;
-      this.isDialog = !this.isDialog;
-    },
     createCard(newValue) {      
       this.hold = newValue;
       const card = {
@@ -82,33 +83,41 @@ export default {
         minute: this.hold.minute,
         totalTime: this.hold.totalTime,    
       };
-      this.cards.push(card);            
-      this.hold.title = "";      
-      this.hold.minute = "";
+      this.cards.push(card);                  
     },
-    deleteCard(index) {
-      if (confirm("delete OK ?")) {
-        this.cards.splice(index, 1);
-      }
+    reflectEditToHold(newValue) {
+      this.hold = newValue;
     },    
     reflectEditCard(editedCard) {      
       const cardIndex = editedCard.cardIndex;
       this.cards.splice(cardIndex,1,editedCard)
     },
+    deleteCard(index) {
+      if (confirm("delete OK ?")) {
+        this.cards.splice(index, 1);
+      }
+    },
     addTime(index) {      
       this.cards[index].totalTime += parseInt(this.cards[index].minute);
     },
-    removeTime(index) {      
-      if(this.cards[index].totalTime > 0 && this.cards[index].totalTime > this.cards[index].minute) {        
-        this.cards[index].totalTime -= parseInt(this.cards[index].minute);
+    removeTime(index) {
+      const card = this.cards[index];      
+      if(card.totalTime > 0 && card.totalTime > card.minute) {        
+        card.totalTime -= parseInt(card.minute);
       } else {
-        this.cards[index].totalTime = 0;
+        card.totalTime = 0;
       }
     },
     takeCards(newValue) {
       this.cards= newValue;
     }       
-  },  
+  },
+  computed: {
+    screenHeight() {      
+      const screenHeight = 	document.documentElement.clientHeight;         
+      return (screenHeight - 200) + 'px';
+    }
+  },
   watch: {
     cards: {
       handler: function () {
@@ -119,14 +128,7 @@ export default {
   },
   mounted: function () {
     this.cards = JSON.parse(localStorage.getItem("cards")) || [];    
-  },
-  computed: {
-    screenHeight() {      
-      const screenHeight = 	document.documentElement.clientHeight;         
-      return (screenHeight - 200) + 'px';
-    }
-  }
-     
+  }     
 }
 </script>
 <style lang="scss">

@@ -1,7 +1,7 @@
 <template>
   <div class="create-card">
-    <button class="create-card-button" @click="toggleDialog()">
-      <img src="../../assets/plus.svg" alt="create-taskcard-button"  width="100">
+    <button class="create-card-button" @click="resetCard();showDialog()">
+      <img src="../../assets/plus.svg" alt="create-taskcard-button" class="pointer" width="100">
     </button>
     </div>
 </template>
@@ -10,11 +10,12 @@ export default {
   props: {        
     isDialog: Boolean,
   },
-  data: ()=> ({    
-  }),
   methods: {
-    toggleDialog: function() {      
+    showDialog() {      
       this.$emit('showDialog',this.isDialog )      
+    },
+    resetCard() {
+      this.$emit('resetHold');
     }
   },
 };

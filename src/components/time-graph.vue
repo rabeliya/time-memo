@@ -4,13 +4,13 @@
     <p class="graph-tag">Total</p>
     <div class="total-time-wrapper">
       <p class="total-time">
-        {{ totalHour }}<span class="mini-letter">h</span>
-        {{ totalMin }}<span class="mini-letter">min</span>
+        {{ resultHour(totalMin) }}<span class="mini-letter">h</span>
+        {{ resultMin(totalMin) }}<span class="mini-letter">min</span>
       </p>           
     </div>
     <ul class="progress-bar">
-      <li v-for="(card,index) in cards" :key="card.id" v-bind:style="{background:cardColor(index),
-        width: barWidth(sortLabel(index).totalTime) + 'px'}">      
+      <li class="progress-color" v-for="(card,index) in cards" :key="card.id" v-bind:style="{background:cardColor(index),
+        width: barWidth(sortLabel(index).totalTime,totalMin) + 'px'}">      
       </li>
     </ul>
     <ul v-if="cards.length > 0" class="label-wrapper">
@@ -24,7 +24,7 @@
               {{ convertToHour(sortLabel(index).totalTime) }}h{{ leftMin(sortLabel(index).totalTime) }}min
           </span>
         </div>
-        <span class="percent">{{ calcPercent(sortLabel(index).totalTime) }}%</span>        
+        <span class="percent">{{ calcPercent(sortLabel(index).totalTime,totalMin) }}%</span>        
       </li>
     </ul>
     <ul v-else>
@@ -34,37 +34,33 @@
 </template>
 <script>
   export default {
-    components: { 
-    },
     props: {
       cards: Array,
     },
-    data: () => ({              
-    }),  
     methods: {
+      resultHour(totalMin) {                
+        return Math.floor(totalMin / 60);        
+      },
+      resultMin(totalMin) {                
+        return totalMin % 60
+      },
+      calcPercent(time,totalMin) {        
+        return Math.floor(time / totalMin *100);        
+      },
+      barWidth(time,totalMin) {
+        const wrapperWidth = 250;        
+        return Math.floor(wrapperWidth * (time / totalMin));                            
+      },    
     },
     computed: {
-      totalHour() {
-        let total = 0;
-        const length = this.cards.length;
-        for(let i = 0; i < length; i++) {
-          total += this.cards[i].totalTime 
-        }
-        const resultHour = Math.floor(total / 60);
-        if(resultHour === 0) {
-          return "";
-        } else {
-          return Math.floor(total / 60);
-        }
-      },
       totalMin() {
         let total = 0;
         const length = this.cards.length;
         for(let i = 0; i < length; i++) {
           total += this.cards[i].totalTime 
         }
-        return total % 60;      
-      },
+        return total;        
+      },            
       convertToHour() {
         return function(time) {
           return Math.floor(time / 60);                 
@@ -73,27 +69,6 @@
       leftMin() {
         return function(time) {
           return time % 60;      
-        }
-      },
-      calcPercent() {
-        return function(time) {
-          let total = 0;
-          const length = this.cards.length;
-          for(let i = 0; i < length; i++) {
-            total += this.cards[i].totalTime 
-          }          
-          return Math.floor(time / total *100);
-        }
-      },
-      barWidth() {
-        return function(time) {
-          let total = 0;
-          const wrapperWidth = 250;
-          const length = this.cards.length;
-          for(let i = 0; i < length; i++) {
-            total += this.cards[i].totalTime 
-          }
-          return Math.floor(wrapperWidth * (time / total));          
         }
       },
       cardColor() {
@@ -120,9 +95,6 @@
   }      
 </script>
 <style lang="scss" scoped>
-  li{
-    list-style: none;
-  }
   .no-task-info {
     margin-top: 30px;
   }
@@ -132,7 +104,7 @@
     display: flex;  
     flex-direction: column;  
     align-items: center;
-    width: 280px;
+    width: 320px;
     min-height: 200px;
     margin-bottom: 120px;
     padding: 20px;        
@@ -166,7 +138,7 @@
       box-shadow: $shadow;
       padding: 0;
       margin: 0;
-      li {
+      .progress-color {
         height: 20px;        
       }
     }
