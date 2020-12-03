@@ -13,8 +13,6 @@
       </div>
       <div class="main-app">
         <TaskCard 
-        @showDialog="reflectDialog" 
-        @toggleDialog="reflectDialog" 
         @receiveHold="createCard"
         @resetHold="resetHold"
         @deleteCard="deleteCard"
@@ -25,7 +23,6 @@
         @takeCards="takeCards"
         @editCard="reflectEditToHold"
         :hold="hold"
-        :isDialog="isDialog"
         :cards="cards"
         />               
       </div>
@@ -39,9 +36,11 @@ import TaskCard from "./components/task-card.vue";
 import MemoApp from "./components/memo.vue";
 import TodoApp from "./components/todo.vue";
 import TimeGraph from "./components/time-graph.vue";
+import store from "./store/index.js"; 
 
 export default {
   name: "App",
+  store,
   components: {
     MemoApp,    
     TodoApp,
@@ -55,8 +54,6 @@ export default {
       {minute:"60",title:"Delete All!",totalTime:0},
       ],
     labels: [],
-    isEditDialog: false,    
-    isDialog: false,    
     hold: 
       { title: "",minute:"",totalTime:0}      
   }),
@@ -72,10 +69,6 @@ export default {
     setCards(newValue) {
       this.cards = newValue;
     },
-    reflectDialog(newValue) {
-      this.isDialog = newValue;
-      this.isDialog = !this.isDialog;
-    },    
     createCard(newValue) {      
       this.hold = newValue;
       const card = {

@@ -8,11 +8,10 @@
 <script>
 export default {
   props: {        
-    isDialog: Boolean,
   },
   methods: {
     showDialog() {      
-      this.$emit('showDialog',this.isDialog )      
+      this.$store.commit('toggleDialog')
     },
     resetCard() {
       this.$emit('resetHold');

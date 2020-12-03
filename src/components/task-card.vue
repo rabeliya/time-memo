@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition appear>
-      <CardDialog v-if="this.isDialog" :isDialog="isDialog" @closeDialog="reflectDialog" v-bind.sync="hold" @submit="emitHoldData" @submitEditCard="submitEditCard"/>    
+      <CardDialog v-if="isDialogVuex" v-bind.sync="hold" @submit="emitHoldData" @submitEditCard="submitEditCard"/>    
     </transition>
     <ul class="card-list">
       <li v-for="(card,index) in cards" :key="card.id" class="task-card">
@@ -27,7 +27,7 @@
         </div>
       </li>
       <li>
-        <CreateCard @showDialog="reflectDialog" :isDialog="isDialog" @resetHold="resetHold"/>
+        <CreateCard @resetHold="resetHold"/>
       </li>
     </ul>
   </div>
@@ -43,7 +43,6 @@ export default {
     CreateCard,
   },
   props: {
-    isDialog: Boolean,    
     title: String,    
     minute: String,
     cards: Array,
@@ -53,12 +52,9 @@ export default {
     resetHold() {
       this.$emit('resetHold');
     },
-    reflectDialog(newValue) {
-      this.$emit('toggleDialog', newValue)            
-    },
     showDialog() {      
-      this.$emit('showDialog',this.isDialog )      
-    },
+      this.$store.commit('toggleDialog')
+    },    
     emitAddTime(index) {
       this.$emit('addTime',index);
     },
@@ -95,6 +91,9 @@ export default {
         if( index % 12 === 10 ) return '#D2568D'
         if( index % 12 === 11 ) return '#D2556A'        
       }
+    },
+    isDialogVuex() {
+      return this.$store.state.isDialog
     }
   }
 }  

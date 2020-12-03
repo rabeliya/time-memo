@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-wrapper">
-    <div class="dialog-bg" @click="closeDialog"></div>
+    <div class="dialog-bg" @click="toggleDialog"></div>
     <div class="dialog">
       <form class="dialog-form">
         <div class="input-content">
@@ -20,7 +20,7 @@
           <span v-if="$v.minute.$error" class="error-message">select any minute !</span>
         </div>
         <div class="button-wrapper">
-          <button class="cancel-button pointer" type="button" @click="closeDialog">cancel</button>
+          <button class="cancel-button pointer" type="button" @click="toggleDialog">cancel</button>
           <button type="button" class="ok-button pointer" @click="submitForm">OK</button>          
         </div>
       </form>
@@ -32,7 +32,6 @@ import { required, maxLength } from "vuelidate/lib/validators";
 
 export default {
   props: {
-    isDialog: Boolean,    
     title: String,    
     minute: String,
     totalTime: Number,           
@@ -51,8 +50,8 @@ export default {
     },
   },
   methods: {    
-    closeDialog: function() {      
-      this.$emit('closeDialog',this.isDialog );
+    toggleDialog: function() {      
+      this.$store.commit('toggleDialog');
     },    
     submitForm(){
         this.$v.$touch();
@@ -60,14 +59,14 @@ export default {
             if(this.$v.$invalid){
                 alert('input all forms !');
             }else{                
-                this.closeDialog();
+                this.toggleDialog();
                 this.$emit('submitEditCard');
             }          
         } else {
             if(this.$v.$invalid){
                 alert('input all forms !');
             }else{
-                this.closeDialog();
+                this.toggleDialog();
                 this.$emit('submit');
             }
         }
